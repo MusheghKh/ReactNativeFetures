@@ -4,6 +4,7 @@ import {
     View,
     FlatList,
     ActivityIndicator,
+    Alert,
 } from 'react-native';
 import { List, ListItem, SearchBar } from "react-native-elements";
 
@@ -23,6 +24,14 @@ class PersonsScreen extends Component {
 
     componentDidMount(){
         this.makeRemoteRequest();
+    }
+
+    sovorakan(){
+        Alert.alert('svo');
+    }
+
+    slaqov = () => {
+        Alert.alert('slo');
     }
 
     makeRemoteRequest = () => {
@@ -79,10 +88,9 @@ class PersonsScreen extends Component {
         );
     }
 
-    _listener(person){
-        console.log(person);
+    _openPersonDetail = (person) => {
         let navigation = this.props.navigation;
-        navigation.navigate('PersonDetail', {person: person});
+        navigation.navigate('PersonDetail', {person});
     }
 
     render() {
@@ -98,7 +106,7 @@ class PersonsScreen extends Component {
                             title={`${item.name.first} ${item.name.last}`}
                             subtitle={item.email}
                             avatar={{ uri: item.picture.thumbnail}}
-                            onPress={ () => this._listener(item) }
+                            onPress={ () => this._openPersonDetail(item) }
                             containerStyle={{ borderBottomWidth: 0, backgroundColor: 'white' }}
                         />
                     )}

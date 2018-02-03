@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
-import {
-    Platform,
-    StyleSheet,
-    Text,
-    View,
-    Button,
-    TextInput,
-} from 'react-native';
+import { Platform, StyleSheet, } from 'react-native';
+import firebase from 'react-native-firebase';
 
 import MainStack from './Navigator';
+
+firebase.messaging().onMessage((obj) => {
+	Alert.alert(JSON.stringify(obj));
+});
 
 export default class App extends Component<{}> {
     render() {

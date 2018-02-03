@@ -12,22 +12,17 @@ class DetailPersonScreen extends Component{
 	constructor(props){
 		super(props);
 
+		let { person } = this.props.navigation.state.params;
 		this.state = {
-			person: null,
+			person: person
 		};
-	}
-
-	componentDidMount(){
-		let { params } = this.props.navigation.state;
-		this.setState({person: params.person});
 	}
 
 	render(){
 		let { name } = this.state.person;
 		return (
 			<View>
-				<Text>asdds</Text>
-				<Text>{name.firstname} {name.lastname}</Text>
+				<Text>Firstname: {name.first}, Lastname: {name.last}</Text>
 			</View>
 		)
 	}

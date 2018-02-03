@@ -10,11 +10,11 @@ import DetailPersonScreen from './DetailPersonScreen';
 import TimePickerScreen from './TimePickerScreen';
 
 const DrawerNav = DrawerNavigator({
-    Recent: { 
+    Persons: { 
         screen: PersonsScreen,
         navigationOptions: {
-            title: "Recent",
-            drawerLabel: "Recent",
+            title: "Persons",
+            drawerLabel: "Persons",
         } 
     },
     AllContacts: { 
