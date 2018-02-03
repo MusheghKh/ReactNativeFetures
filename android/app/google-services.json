@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "576238938063",
+    "firebase_url": "https://fir-demo-f1237.firebaseio.com",
+    "project_id": "fir-demo-f1237",
+    "storage_bucket": "fir-demo-f1237.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576238938063:android:ce60e4913e705019",
+        "android_client_info": {
+          "package_name": "com.demorn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "576238938063-qd2ekam80m1ngde9v105mp660rr85ot7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4dl3Rpqs9gBXsVzELxJWYl1-EZ-AMm74"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
