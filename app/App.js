@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Platform, StyleSheet, } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import firebase from 'react-native-firebase';
 
 import MainStack from './Navigator';
