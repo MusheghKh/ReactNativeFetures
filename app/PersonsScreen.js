@@ -6,7 +6,7 @@ import {
     ActivityIndicator,
     Alert,
 } from 'react-native';
-import { List, ListItem, SearchBar } from "react-native-elements";
+import { List, ListItem, SearchBar, Tile } from "react-native-elements";
 
 class PersonsScreen extends Component {
     constructor(props){
@@ -15,6 +15,7 @@ class PersonsScreen extends Component {
         this.state = {
             loading: false,
             data: [],
+            filteredData: [],
             page: 1,
             seed: 1,
             error: null,
@@ -26,12 +27,13 @@ class PersonsScreen extends Component {
         this.makeRemoteRequest();
     }
 
-    sovorakan(){
-        Alert.alert('svo');
-    }
 
-    slaqov = () => {
-        Alert.alert('slo');
+    _searchFilter(text) {
+        this.state.filteredData && this.setState({
+            filteredData: this.state.data.length && this.state.data.filter(item => {
+                return item.name.first.includes(text) || item.name.last.includes(text) || item.email.includes(text);
+            })
+        }, () => !this.state.filteredData.length && Alert.alert("NO RESULTS", "No result matched your search."));
     }
 
     makeRemoteRequest = () => {
@@ -42,7 +44,8 @@ class PersonsScreen extends Component {
             .then(res => res.json())
             .then(res => {
                 this.setState({
-                    data: page === 1? res.results : [...this.state.data, ...res.results],
+                    data: page === 1 ? res.results : [...this.state.data, ...res.results],
+                    filteredData: page === 1 ? res.results : [...this.state.data, ...res.results],
                     error: res.error || null,
                     loading: false,
                     refreshing: false
@@ -66,8 +69,15 @@ class PersonsScreen extends Component {
         );
     };
 
+
+    // xz erba onClearText-@ ashxatum, bayc de lav pyana, tox lini
     renderHeader = () => {
-        return <SearchBar placeholder="Type Here..." lightTheme round />;
+        return <SearchBar
+            placeholder="Type Here..."
+            lightTheme round
+            onChangeText={input => this._searchFilter(input)}
+            onClearText={() => Alert.alert('Function onClearText')}
+        />;
     }
 
     renderFooter = () => {
@@ -99,7 +109,7 @@ class PersonsScreen extends Component {
                 containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}
             >
                 <FlatList
-                    data={this.state.data}
+                    data={this.state.filteredData}
                     renderItem={ ({ item }) => (
                         <ListItem
                             roundAvatar
