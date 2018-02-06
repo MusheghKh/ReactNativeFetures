@@ -26,14 +26,6 @@ class PersonsScreen extends Component {
         this.makeRemoteRequest();
     }
 
-    sovorakan(){
-        Alert.alert('svo');
-    }
-
-    slaqov = () => {
-        Alert.alert('slo');
-    }
-
     makeRemoteRequest = () => {
         const { page, seed } = this.state;
         const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;

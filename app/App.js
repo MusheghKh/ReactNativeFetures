@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import firebase from 'react-native-firebase';
 import PushNotification from 'react-native-push-notification';
+import SQLite from 'react-native-sqlite-storage';
 
 import MainStack from './Navigator';
 
@@ -12,6 +13,8 @@ firebase.messaging().onMessage((msg) => {
 		message: body
 	});
 });
+
+//SQLite.openDatabase({name: 'DemoRN'})
 
 export default class App extends Component<{}> {
     render() {
