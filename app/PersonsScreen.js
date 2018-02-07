@@ -4,9 +4,45 @@ import {
     View,
     FlatList,
     ActivityIndicator,
+    StyleSheet,
     Alert,
 } from 'react-native';
 import { List, ListItem, SearchBar, Tile } from "react-native-elements";
+import Icon from 'react-native-vector-icons/Entypo';
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        borderTopWidth: 0,
+        borderBottomWidth: 0,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    flatListItem: {
+        borderBottomWidth: 0,
+        backgroundColor: 'white'
+    },
+
+    separator: {
+        height: 1,
+        width: "86%",
+        backgroundColor: "#CED0CE",
+        marginLeft: "14%"
+    },
+
+    emptyListView: {
+        backgroundColor: 'transparent',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    footer: {
+        paddingVertical: 20,
+        borderTopWidth: 1,
+        borderColor: "#CED0CE"
+    }
+});
 
 class PersonsScreen extends Component {
     constructor(props){
@@ -33,7 +69,7 @@ class PersonsScreen extends Component {
             filteredData: this.state.data.length && this.state.data.filter(item => {
                 return item.name.first.includes(text) || item.name.last.includes(text) || item.email.includes(text);
             })
-        }, () => !this.state.filteredData.length && Alert.alert("NO RESULTS", "No result matched your search."));
+        });
     }
 
     makeRemoteRequest = () => {
@@ -54,20 +90,15 @@ class PersonsScreen extends Component {
             .catch(error => {
                 this.setState({ error, loading: false });
             });
-    };
+    }
 
-    renderSeperator = () => {
+    renderSeparator = () => {
         return (
             <View
-                style={{
-                    height: 1,
-                    width: "86%",
-                    backgroundColor: "#CED0CE",
-                    marginLeft: "14%",
-                }}
+                style={styles.separator}
             />
         );
-    };
+    }
 
 
     // xz erba onClearText-@ ashxatum, bayc de lav pyana, tox lini
@@ -87,15 +118,21 @@ class PersonsScreen extends Component {
 
         return (
             <View 
-                style={{
-                    paddingVertical: 20,
-                    borderTopWidth: 1,
-                    borderColor: "#CED0CE"
-                }}
+                style={styles.footer}
             >
                 <ActivityIndicator animating size="large" />
             </View>
         );
+    }
+
+    renderEmptyListView = () => {
+        return !this.state.filteredData.length && !this.state.loading && (
+            <View
+                style={styles.emptyListView}>
+                <Icon name="circle-with-cross" size={90}/>
+                <Text size={60}>NO RESULTS</Text>
+            </View>
+        )
     }
 
     _openPersonDetail = (person) => {
@@ -106,7 +143,7 @@ class PersonsScreen extends Component {
     render() {
         return (
             <View 
-                containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}
+                containerStyle={styles.container}
             >
                 <FlatList
                     data={this.state.filteredData}
@@ -117,13 +154,14 @@ class PersonsScreen extends Component {
                             subtitle={item.email}
                             avatar={{ uri: item.picture.thumbnail}}
                             onPress={ () => this._openPersonDetail(item) }
-                            containerStyle={{ borderBottomWidth: 0, backgroundColor: 'white' }}
+                            containerStyle={styles.flatListItem}
                         />
                     )}
                     keyExtractor={item => item.email}
-                    ItemSeperatorComponent={ this.renderSeperator }
+                    ItemSeparatorComponent={ this.renderSeparator }
                     ListHeaderComponent={ this.renderHeader }
                     ListFooterComponent={ this.renderFooter }
+                    ListEmptyComponent={ this.renderEmptyListView }
                 />
             </View>
         );
