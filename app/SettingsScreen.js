@@ -72,6 +72,7 @@ export default class SettingsScreen extends Component{
 		return container;
 	}
 
+
 	render(){
 		let { blackBackground } = this.state;
 		return(
