@@ -94,6 +94,7 @@ class PersonsScreen extends Component {
     }
 
     render() {
+        debugger;
         return (
             <View 
                 containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}
