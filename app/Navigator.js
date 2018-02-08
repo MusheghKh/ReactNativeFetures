@@ -8,6 +8,7 @@ import AllContactsScreen from './AllContactsScreen';
 import ChatScreen from './ChatScreen';
 import DetailPersonScreen from './DetailPersonScreen';
 import TimePickerScreen from './TimePickerScreen';
+import SettingsScreen from './SettingsScreen';
 
 const DrawerNav = DrawerNavigator({
     Persons: { 
@@ -30,7 +31,14 @@ const DrawerNav = DrawerNavigator({
             title: "Time Picker",
             drawerLabel: "Time Picker",
         }
-    }
+    },
+    Settings: {
+        screen: SettingsScreen,
+        navigationOptions: {
+            title: "Settings",
+            drawerLabel: "Settings",
+        }
+    },
 }, {
     navigationOptions: {
         drawerIcon: ({ tintColor }) => <Icon name="rocket" size={24} />
