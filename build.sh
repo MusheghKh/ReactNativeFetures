@@ -3,6 +3,7 @@
 BUGGED_FILE="$(pwd)/node_modules/react-native/local-cli/core/__fixtures__/files/package.json"
 
 if [ "$1" = "--debug" ]; then
+	xdg-open http://localhost:8081/debugger-ui &
 	npm run react-devtools &
 	DEVTOOLS_PID=$!
 fi
