@@ -4,7 +4,7 @@ BUGGED_FILE="$(pwd)/node_modules/react-native/local-cli/core/__fixtures__/files/
 
 if [ "$1" = "--debug" ]; then
 	xdg-open http://localhost:8081/debugger-ui &
-	npm run react-devtools &
+	yarn react-devtools &
 	DEVTOOLS_PID=$!
 fi
 
@@ -22,11 +22,11 @@ case $(netstat -antu | grep 8081) in
 esac
 
 # Launch server
-npm start &
+yarn start &
 JS_SERVER_PID=$!
 
 # Launch Android
-npm run android && ANDROID_SDK_PID=$! && wait
+yarn android && ANDROID_SDK_PID=$! && wait
 
 # After cancelling the build kill the processes
 kill $DEVTOOLS_PID $JS_SERVER_PID $ANDROID_SDK_PID
