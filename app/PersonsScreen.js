@@ -6,6 +6,7 @@ import {
     ActivityIndicator,
     StyleSheet,
     Alert,
+    Dimensions,
 } from 'react-native';
 import { List, ListItem, SearchBar, Tile } from "react-native-elements";
 import Icon from 'react-native-vector-icons/Entypo';
@@ -33,6 +34,8 @@ const styles = StyleSheet.create({
 
     emptyListView: {
         backgroundColor: 'transparent',
+        transform: [{ translateY: Dimensions.get('window').height * 0.2 }],
+        zIndex: 10000,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -100,8 +103,6 @@ class PersonsScreen extends Component {
         );
     }
 
-
-    // xz erba onClearText-@ ashxatum, bayc de lav pyana, tox lini
     renderHeader = () => {
         return <SearchBar
             placeholder="Type Here..."
@@ -123,16 +124,6 @@ class PersonsScreen extends Component {
                 <ActivityIndicator animating size="large" />
             </View>
         );
-    }
-
-    renderEmptyListView = () => {
-        return !this.state.filteredData.length && !this.state.loading && (
-            <View
-                style={styles.emptyListView}>
-                <Icon name="circle-with-cross" size={90}/>
-                <Text size={60}>NO RESULTS</Text>
-            </View>
-        )
     }
 
     _openPersonDetail = (person) => {
@@ -161,8 +152,12 @@ class PersonsScreen extends Component {
                     ItemSeparatorComponent={ this.renderSeparator }
                     ListHeaderComponent={ this.renderHeader }
                     ListFooterComponent={ this.renderFooter }
-                    ListEmptyComponent={ this.renderEmptyListView }
                 />
+                {!this.state.filteredData.length && !this.state.loading && <View
+                    style={styles.emptyListView}>
+                    <Icon name="circle-with-cross" size={90}/>
+                    <Text size={60}>NO RESULTS</Text>
+                </View>}
             </View>
         );
     }
