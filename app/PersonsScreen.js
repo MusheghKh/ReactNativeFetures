@@ -4,9 +4,47 @@ import {
     View,
     FlatList,
     ActivityIndicator,
+    StyleSheet,
     Alert,
+    Dimensions,
 } from 'react-native';
-import { List, ListItem, SearchBar } from "react-native-elements";
+import { List, ListItem, SearchBar, Tile } from "react-native-elements";
+import Icon from 'react-native-vector-icons/Entypo';
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        borderTopWidth: 0,
+        borderBottomWidth: 0,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    flatListItem: {
+        borderBottomWidth: 0,
+        backgroundColor: 'white'
+    },
+
+    separator: {
+        height: 1,
+        width: "86%",
+        backgroundColor: "#CED0CE",
+        marginLeft: "14%"
+    },
+
+    emptyListView: {
+        backgroundColor: 'transparent',
+        transform: [{ translateY: Dimensions.get('window').height * 0.2 }],
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    footer: {
+        paddingVertical: 20,
+        borderTopWidth: 1,
+        borderColor: "#CED0CE"
+    }
+});
 
 class PersonsScreen extends Component {
     constructor(props){
@@ -15,6 +53,7 @@ class PersonsScreen extends Component {
         this.state = {
             loading: false,
             data: [],
+            filteredData: [],
             page: 1,
             seed: 1,
             error: null,
@@ -26,12 +65,13 @@ class PersonsScreen extends Component {
         this.makeRemoteRequest();
     }
 
-    sovorakan(){
-        Alert.alert('svo');
-    }
 
-    slaqov = () => {
-        Alert.alert('slo');
+    _searchFilter(text) {
+        this.state.filteredData && this.setState({
+            filteredData: this.state.data.length && this.state.data.filter(item => {
+                return item.name.first.includes(text) || item.name.last.includes(text) || item.email.includes(text);
+            })
+        });
     }
 
     makeRemoteRequest = () => {
@@ -42,7 +82,8 @@ class PersonsScreen extends Component {
             .then(res => res.json())
             .then(res => {
                 this.setState({
-                    data: page === 1? res.results : [...this.state.data, ...res.results],
+                    data: page === 1 ? res.results : [...this.state.data, ...res.results],
+                    filteredData: page === 1 ? res.results : [...this.state.data, ...res.results],
                     error: res.error || null,
                     loading: false,
                     refreshing: false
@@ -51,23 +92,23 @@ class PersonsScreen extends Component {
             .catch(error => {
                 this.setState({ error, loading: false });
             });
-    };
+    }
 
-    renderSeperator = () => {
+    renderSeparator = () => {
         return (
             <View
-                style={{
-                    height: 1,
-                    width: "86%",
-                    backgroundColor: "#CED0CE",
-                    marginLeft: "14%",
-                }}
+                style={styles.separator}
             />
         );
-    };
+    }
 
     renderHeader = () => {
-        return <SearchBar placeholder="Type Here..." lightTheme round />;
+        return <SearchBar
+            placeholder="Type Here..."
+            lightTheme round
+            onChangeText={input => this._searchFilter(input)}
+            onClearText={() => Alert.alert('Function onClearText')}
+        />;
     }
 
     renderFooter = () => {
@@ -77,11 +118,7 @@ class PersonsScreen extends Component {
 
         return (
             <View 
-                style={{
-                    paddingVertical: 20,
-                    borderTopWidth: 1,
-                    borderColor: "#CED0CE"
-                }}
+                style={styles.footer}
             >
                 <ActivityIndicator animating size="large" />
             </View>
@@ -96,10 +133,10 @@ class PersonsScreen extends Component {
     render() {
         return (
             <View 
-                containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}
+                containerStyle={styles.container}
             >
                 <FlatList
-                    data={this.state.data}
+                    data={this.state.filteredData}
                     renderItem={ ({ item }) => (
                         <ListItem
                             roundAvatar
@@ -107,14 +144,19 @@ class PersonsScreen extends Component {
                             subtitle={item.email}
                             avatar={{ uri: item.picture.thumbnail}}
                             onPress={ () => this._openPersonDetail(item) }
-                            containerStyle={{ borderBottomWidth: 0, backgroundColor: 'white' }}
+                            containerStyle={styles.flatListItem}
                         />
                     )}
                     keyExtractor={item => item.email}
-                    ItemSeperatorComponent={ this.renderSeperator }
+                    ItemSeparatorComponent={ this.renderSeparator }
                     ListHeaderComponent={ this.renderHeader }
                     ListFooterComponent={ this.renderFooter }
                 />
+                {!this.state.filteredData.length && !this.state.loading && <View
+                    style={styles.emptyListView}>
+                    <Icon name="circle-with-cross" size={90}/>
+                    <Text size={60}>NO RESULTS</Text>
+                </View>}
             </View>
         );
     }
