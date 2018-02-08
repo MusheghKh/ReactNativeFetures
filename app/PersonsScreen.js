@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     emptyListView: {
         backgroundColor: 'transparent',
         transform: [{ translateY: Dimensions.get('window').height * 0.2 }],
-        zIndex: 10000,
         alignItems: 'center',
         justifyContent: 'center'
     },
