@@ -28,7 +28,7 @@ class Filters extends Component {
           key={filter.name}
           style={style}
           onPress={filter.action}>
-          <Text style={styles.text}>{capitalize(filter.name) || filter.name}</Text>
+          <Text style={styles.text}>{capitalize(filter.name)}</Text>
         </TouchableOpacity>
       )
     });
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#fff',
     textAlign: 'center',
+    alignItems: 'center',
     fontWeight: 'bold'
   },
   current: {

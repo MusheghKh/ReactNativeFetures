@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import firebase from 'react-native-firebase';
 import PushNotification from 'react-native-push-notification';
-import SQLite from 'react-native-sqlite-storage';
+import Realm from 'realm';
 
 import MainStack from './Navigator';
 import store from './store';
