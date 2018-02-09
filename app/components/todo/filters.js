@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#fff',
     textAlign: 'center',
-    alignItems: 'center',
     fontWeight: 'bold'
   },
   current: {
