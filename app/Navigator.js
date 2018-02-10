@@ -9,6 +9,7 @@ import ChatScreen from './ChatScreen';
 import DetailPersonScreen from './DetailPersonScreen';
 import TimePickerScreen from './TimePickerScreen';
 import SettingsScreen from './SettingsScreen';
+import WebViewScreen from './WebViewScreen';
 
 const DrawerNav = DrawerNavigator({
     Persons: { 
@@ -39,6 +40,13 @@ const DrawerNav = DrawerNavigator({
             drawerLabel: "Settings",
         }
     },
+    WebView: {
+        screen: WebViewScreen,
+        navigationOptions: {
+            title: "WebView",
+            drawerLabel: "WebView",
+        }
+    }
 }, {
     navigationOptions: {
         drawerIcon: ({ tintColor }) => <Icon name="rocket" size={24} />
