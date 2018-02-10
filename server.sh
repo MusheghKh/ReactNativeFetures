@@ -23,10 +23,7 @@ esac
 
 # Launch server
 yarn start &
-JS_SERVER_PID=$!
-
-# Launch Android
-yarn android && ANDROID_SDK_PID=$! && wait
+JS_SERVER_PID=$! && wait
 
 # After cancelling the build kill the processes
-kill $DEVTOOLS_PID $JS_SERVER_PID $ANDROID_SDK_PID
+kill $DEVTOOLS_PID $JS_SERVER_PID
