@@ -10,6 +10,7 @@ import DetailPersonScreen from './DetailPersonScreen';
 import TimePickerScreen from './TimePickerScreen';
 import SettingsScreen from './SettingsScreen';
 import WebViewScreen from './WebViewScreen';
+import ImagePickerScreen from './ImagePickerScreen';
 
 const DrawerNav = DrawerNavigator({
     Persons: { 
@@ -45,6 +46,13 @@ const DrawerNav = DrawerNavigator({
         navigationOptions: {
             title: "WebView",
             drawerLabel: "WebView",
+        }
+    },
+    ImagePicker: {
+        screen: ImagePickerScreen,
+        navigationOptions: {
+            title: "ImagePicker",
+            drawerLabel: "ImagePicker",
         }
     }
 }, {
