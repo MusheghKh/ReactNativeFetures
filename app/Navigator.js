@@ -11,6 +11,7 @@ import TimePickerScreen from './TimePickerScreen';
 import SettingsScreen from './SettingsScreen';
 import WebViewScreen from './WebViewScreen';
 import ImagePickerScreen from './ImagePickerScreen';
+import TabsNavigatorScreen from './TabsNavigatorScreen';
 
 const DrawerNav = DrawerNavigator({
     Persons: { 
@@ -53,6 +54,13 @@ const DrawerNav = DrawerNavigator({
         navigationOptions: {
             title: "ImagePicker",
             drawerLabel: "ImagePicker",
+        }
+    },
+    Tabs: {
+        screen: TabsNavigatorScreen,
+        navigationOptions: {
+            title: "Tabs",
+            drawerLabel: "Tabs",
         }
     }
 }, {
