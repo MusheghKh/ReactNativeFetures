@@ -10,13 +10,17 @@ class TodoList extends Component {
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2
-      })
+      }),
+      loading: true
     };
-    if (this.props.todos) {
-      this.state.dataSource = this.state.dataSource.cloneWithRows(
-        this.getTodosWithTemplate(this.props.todos)
-      );
-    }
+  }
+
+  componentDidMount() {
+    this.props.getAllTodos();
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(this.getTodosWithTemplate(this.props.todos)),
+      loading: false
+    });
   }
 
   getTodosWithTemplate(todos) {
@@ -33,7 +37,7 @@ class TodoList extends Component {
     }
   }
 
-  renderRow = (todo) => {
+  renderRow = todo => {
     if (todo.template) {
       return this.renderTodoItemTemplate();
     } else {
@@ -52,7 +56,7 @@ class TodoList extends Component {
           if (todo.completed) {
             incompleteTodo(todo.id);
           } else {
-            completeTodo(todo.id)
+            completeTodo(todo.id);
           }
         }}>
         <View style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>

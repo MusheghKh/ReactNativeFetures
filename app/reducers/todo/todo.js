@@ -6,6 +6,8 @@ export default function todosReducer (todos = [], action = {}) {
   switch (action.type) {
     case actions.ADD:
       return [...todos, action.todo];
+    case actions.ADD_ALL:
+      return [...action.todos];
     case actions.COMPLETE:
       if (index === -1) {
         return todos;

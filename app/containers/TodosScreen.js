@@ -12,8 +12,6 @@ import AddTodo from '../components/todo/add-todo';
 import Filters from '../components/todo/filters';
 
 import store from '../store';
-store.dispatch(todoActions.addTodo('Foo Bar'));
-store.dispatch(todoActions.addTodo('Hello World'));
 
 @connect(state => ({
 	todos: state.todos.filter(todo => {
