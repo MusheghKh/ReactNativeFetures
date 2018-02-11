@@ -1,12 +1,18 @@
 #!/bin/bash
+debug=false
+android=false
 
 BUGGED_FILE="$(pwd)/node_modules/react-native/local-cli/core/__fixtures__/files/package.json"
 
-if [ "$1" = "--debug" ]; then
-	xdg-open http://localhost:8081/debugger-ui &
-	yarn react-devtools &
-	DEVTOOLS_PID=$!
-fi
+for arg in "$@"
+do
+	if [ "$arg" = "--debug" -o "$arg" = "-d" ]; then
+		debug=true
+	fi
+	if [ "$arg" = "--android" -o "$arg" = "-a" ]; then
+		android=true
+	fi
+done
 
 # Remove everything about BUGGED_FILE once react-native devs fix the bug
 if [ -f "$BUGGED_FILE" ]; then
@@ -23,10 +29,20 @@ esac
 
 # Launch server
 yarn start &
-JS_SERVER_PID=$!
+JS_SERVER_PID=$! &
 
-# Launch Android
-yarn android && ANDROID_SDK_PID=$! && wait
+if [ "$debug" = true ]; then
+	xdg-open http://localhost:8081/debugger-ui &
+	yarn react-devtools &
+	DEVTOOLS_PID=$!
+fi
+
+if [ "$android" = true ]; then
+	# Launch Android
+	yarn android && ANDROID_SDK_PID=$!
+fi
+
+wait
 
 # After cancelling the build kill the processes
 kill $DEVTOOLS_PID $JS_SERVER_PID $ANDROID_SDK_PID
