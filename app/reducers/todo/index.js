@@ -1,9 +1,11 @@
 import todoReducer from './todo';
 import filterReducer from './filters';
-import addModalReducer from './add-modal';
+import loadingReducer from './loading';
+import searchFilterReducer from './search-filter';
 
 export default reducers = {
 	todos: todoReducer,
 	filter: filterReducer,
-	addModal: addModalReducer
+	loading: loadingReducer,
+	searchFilter: searchFilterReducer
 }

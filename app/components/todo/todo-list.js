@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, StyleSheet, View, Text, ListView } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import CompleteToggle from './complete-toggle';
 import AddTodoRow from './add-todo-row';
 import { VisibilityFilters } from '../../actions/todo/actionTypes';
+import LoadingSpinner from '../../helpers/loading-spinner';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class TodoList extends Component {
   constructor(props) {
@@ -11,42 +14,33 @@ class TodoList extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2
       }),
-      loading: true
+      loading: this.props.loading
     };
   }
 
   componentDidMount() {
     this.props.getAllTodos();
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this.getTodosWithTemplate(this.props.todos)),
-      loading: false
+      loading: this.state.loading
     });
   }
 
-  getTodosWithTemplate(todos) {
-    return todos.concat([{template: true}]);
-  }
-
   componentWillReceiveProps (nextProps) {
-    if (nextProps.todos !== this.props.todos) {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(
-          this.getTodosWithTemplate(nextProps.todos)
-        )
-      });
+    const { todos, loading } = nextProps;
+
+    if (todos !== this.props.todos) {
+      this.setState({ dataSource: this.state.dataSource.cloneWithRows(todos), loading });
     }
   }
+
+  renderHeader = () => (<SearchBar placeholder="Type Here..." lightTheme round onChangeText={input => this.props.searchFilter(input)}/>);
 
   renderRow = todo => {
-    if (todo.template) {
-      return this.renderTodoItemTemplate();
-    } else {
-      return this.renderTodoItem(todo);
+    const { completeTodo, incompleteTodo, removeTodo } = this.props;
+    if(this.state.loading) {
+      return null;
     }
-  }
 
-  renderTodoItem(todo) {
-    var {completeTodo, incompleteTodo} = this.props;
     return (
       <TouchableHighlight
         underlayColor="#e4f2d9"
@@ -66,24 +60,30 @@ class TodoList extends Component {
             onChecked={() => completeTodo(todo.id)}
             onUnchecked={() => incompleteTodo(todo.id)} />
           <Text style={styles.text}>{todo.name}</Text>
+          <Icon name="trash" size={15} onPress={() => removeTodo(todo.id)} />
         </View>
       </TouchableHighlight>
     )
   }
 
-  renderTodoItemTemplate() {
-    var {addTodo, activeFilter} = this.props
-    return (
-      <AddTodoRow
-        addTodo={(name) => addTodo(name, activeFilter === VisibilityFilters.COMPLETED)} />
-    );
+  renderFooter = () => {
+    const { addTodo, activeFilter } = this.props;
+
+    if(this.state.loading) {
+      return (<LoadingSpinner loading={this.state.loading}/>);
+    }
+
+    return (<AddTodoRow addTodo={name => addTodo(name, activeFilter === VisibilityFilters.COMPLETED)} />);
   }
 
   render() {
     return (
       <ListView
+        enableEmptySections
         dataSource={this.state.dataSource}
-        renderRow={this.renderRow} />
+        renderHeader={this.renderHeader}
+        renderRow={this.renderRow}
+        renderFooter={this.renderFooter} />
     );
   }
 }

@@ -30,6 +30,8 @@ export default function todosReducer (todos = [], action = {}) {
         }),
         ...todos.slice(index + 1)
       ];
+    case actions.REMOVE:
+      return todos.splice(index, 1).length && todos;
     default:
       return todos;
   }

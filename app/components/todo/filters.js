@@ -20,15 +20,17 @@ class Filters extends Component {
       {name: VisibilityFilters.INCOMPLETE, action: showIncomplete}
     ].map(filter => {
       let style = [styles.button];
+      let textStyle = [styles.text];
       if (activeFilter === filter.name) {
-        style.push(styles.current);
+        style.push(styles.tabActive);
+        textStyle.push(styles.textActive);
       }
       return (
         <TouchableOpacity
           key={filter.name}
           style={style}
           onPress={filter.action}>
-          <Text style={styles.text}>{capitalize(filter.name)}</Text>
+          <Text style={textStyle}>{capitalize(filter.name)}</Text>
         </TouchableOpacity>
       )
     });
@@ -37,7 +39,7 @@ class Filters extends Component {
 
 const styles = StyleSheet.create({
   bar: {
-    backgroundColor: '#81c04d',
+    backgroundColor: '#f1f1eb',
     flexDirection: 'row'
   },
   button: {
@@ -46,13 +48,15 @@ const styles = StyleSheet.create({
     flex: 1
   },
   text: {
-    flex: 1,
-    color: '#fff',
+    color: 'gray',
     textAlign: 'center',
     fontWeight: 'bold'
   },
-  current: {
-    backgroundColor: '#70a743'
+  tabActive: {
+    backgroundColor: '#e9e9ef'
+  },
+  textActive: {
+    color: '#81c04d'
   }
 })
 
