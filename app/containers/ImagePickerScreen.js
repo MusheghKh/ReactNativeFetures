@@ -47,7 +47,7 @@ class ImagePickerScreen extends Component{
 				<Image
 					style={styles.backgroundImage}
 					// FIXME warning on source prop
-					source={this.state.background }
+					source={{uri: this.state.background }}
 				/>
 				<Button
 					color="grey"

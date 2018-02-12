@@ -9,7 +9,8 @@ import {
     Dimensions,
 } from 'react-native';
 import { List, ListItem, SearchBar, Tile } from "react-native-elements";
-import Icon from 'react-native-vector-icons/Entypo';
+import NoResults from '../helpers/no-results';
+import LoadingSpinner from '../helpers/loading-spinner';
 
 const styles = StyleSheet.create({
     container: {
@@ -30,13 +31,6 @@ const styles = StyleSheet.create({
         width: "86%",
         backgroundColor: "#CED0CE",
         marginLeft: "14%"
-    },
-
-    emptyListView: {
-        backgroundColor: 'transparent',
-        transform: [{ translateY: Dimensions.get('window').height * 0.2 }],
-        alignItems: 'center',
-        justifyContent: 'center'
     },
 
     footer: {
@@ -64,7 +58,6 @@ class PersonsScreen extends Component {
     componentDidMount(){
         this.makeRemoteRequest();
     }
-
 
     _searchFilter(text) {
         this.state.filteredData && this.setState({
@@ -112,17 +105,7 @@ class PersonsScreen extends Component {
     }
 
     renderFooter = () => {
-        if (!this.state.loading) {
-            return null;
-        }
-
-        return (
-            <View 
-                style={styles.footer}
-            >
-                <ActivityIndicator animating size="large" />
-            </View>
-        );
+        return (<LoadingSpinner loading={this.state.loading} style={styles.footer}/>);
     }
 
     _openPersonDetail = (person) => {
@@ -152,11 +135,7 @@ class PersonsScreen extends Component {
                     ListHeaderComponent={ this.renderHeader }
                     ListFooterComponent={ this.renderFooter }
                 />
-                {!this.state.filteredData.length && !this.state.loading && <View
-                    style={styles.emptyListView}>
-                    <Icon name="circle-with-cross" size={90}/>
-                    <Text size={60}>NO RESULTS</Text>
-                </View>}
+                {!this.state.filteredData.length && !this.state.loading && <NoResults />}
             </View>
         );
     }

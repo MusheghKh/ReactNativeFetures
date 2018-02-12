@@ -27,7 +27,7 @@ case $(netstat -antu | grep 8081) in
 	;;
 esac
 
-# Launch server
+# Launch Server
 yarn start &
 JS_SERVER_PID=$! &
 
