@@ -10,6 +10,9 @@ import DetailPersonScreen from './containers/DetailPersonScreen';
 import TimePickerScreen from './containers/TimePickerScreen';
 import SettingsScreen from './containers/SettingsScreen';
 import TodosScreen from './containers/TodosScreen';
+import WebViewScreen from './containers/WebViewScreen';
+import ImagePickerScreen from './containers/ImagePickerScreen';
+import TabsNavigatorScreen from './containers/TabsNavigatorScreen';
 
 const DrawerNav = DrawerNavigator({
     Persons: { 
@@ -40,11 +43,36 @@ const DrawerNav = DrawerNavigator({
             drawerLabel: "Settings"
         }
     },
+
     Todos: {
         screen: TodosScreen,
         navigationOptions: {
             title: "TODO List",
             drawerLabel: "TODO List"
+        }
+    },
+
+    WebView: {
+        screen: WebViewScreen,
+        navigationOptions: {
+            title: "WebView",
+            drawerLabel: "WebView",
+        }
+    },
+
+    ImagePicker: {
+        screen: ImagePickerScreen,
+        navigationOptions: {
+            title: "ImagePicker",
+            drawerLabel: "ImagePicker",
+        }
+    },
+
+    Tabs: {
+        screen: TabsNavigatorScreen,
+        navigationOptions: {
+            title: "Tabs",
+            drawerLabel: "Tabs",
         }
     }
 }, {
