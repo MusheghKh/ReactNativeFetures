@@ -1,5 +1,12 @@
-import { SEARCH_FILTER } from '../../actions/todo/actionTypes';
+import { SEARCH_FILTER, SET_VISIBILITY_FILTER } from '../../actions/todo/actionTypes';
 
 export default function searchFilterReducer(searchInput = '', action = {}) {
-	return action.type === SEARCH_FILTER && action.input.toLowerCase() || '';
+	switch(action.type) {
+		case SEARCH_FILTER:
+			return action.input.toLowerCase();
+		case SET_VISIBILITY_FILTER:
+			return searchInput;
+		default:
+			return '';	
+	}
 }
