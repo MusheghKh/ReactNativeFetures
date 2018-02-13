@@ -1,4 +1,4 @@
-import { SEARCH_FILTER, SET_VISIBILITY_FILTER } from '../../actions/todo/actionTypes';
+import { SEARCH_FILTER } from '../../actions/todo/actionTypes';
 
 export default function searchFilterReducer(searchInput = '', action = {}) {
 	switch(action.type) {
