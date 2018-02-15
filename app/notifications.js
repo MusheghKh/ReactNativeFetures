@@ -6,19 +6,16 @@ import PushNotification from 'react-native-push-notification';
 
 export default class Notifications {
 	static setBgTaskPeriod(period = 900, timeout = 30) {
-		console.log('scheduled');
 		BackgroundTask.schedule({ period, timeout });
 
 		Notifications.checkStatus();
 	}
 
 	static startBgTask(action, callback) {
-		BackgroundTask.define(() => {
-			debugger;
-			console.log('started');
+		BackgroundTask.define(async () => {
 			switch(action.type) {
 				case 'web-fetch':
-					fetch(action.url, action.options).then(callback);
+					await fetch(action.url, action.options).then(callback);
 				case 'firebase':
 					firebase.messaging().onMessage((msg) => {
 						let { title, body } = msg.fcm;
@@ -26,7 +23,7 @@ export default class Notifications {
 					});
 				case 'custom':
 				default:
-					callback();
+					await callback();
 			}
 
 			Notifications.finishBgTask();
