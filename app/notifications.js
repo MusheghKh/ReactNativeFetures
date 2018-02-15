@@ -26,7 +26,8 @@ export default class Notifications {
 					await callback();
 			}
 
-			Notifications.finishBgTask();
+			// uncomment line below, if you want the task run only once
+			//Notifications.finishBgTask();
 		});
 
 		Notifications.setBgTaskPeriod();
