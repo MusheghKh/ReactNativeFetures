@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Button, Image } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 
 const URL = 'https://api.500px.com/v1/photos';
 const CONSUMER_KEY = '5NEaRSLd0twDCl8uNLDN7cePwjNGuqW2XlvoA88j';
@@ -14,7 +15,7 @@ fetch(`${URL}/search?term=${keyword}&page=${page}&rpp=20&image_size=440&sort=${S
 	sorting
 }))
 
-class Gallery extends Component {
+class GalleryScreen extends Component {
 	render() {
 		const { loading, images } = this.props;
 

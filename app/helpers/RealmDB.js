@@ -23,6 +23,12 @@ export default class RealmDB {
 			.catch(error => { throw new Error(error) });
 	}
 
+	static find(schemaName, id) {
+		return Realm.open({ schema: [RealmSchemas.find(schema => schema.name === schemaName)] })
+			.then(realm => realm.objectForPrimaryKey(schemaName, id))
+			.catch(error => { throw new Error(error) });
+	}
+
 	static findAll(schemaName) {
 		return Realm.open({ schema: [RealmSchemas.find(schema => schema.name === schemaName)] })
 			.then(realm => {
