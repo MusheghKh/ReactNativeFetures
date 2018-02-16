@@ -12,7 +12,7 @@ firebase.messaging().onMessage((msg) => {
     Notifications.notify({ title, message: body });
 });
 
-Notifications.startBgTask({ type: 'custom' }, () => Notifications.notify({ title: 'Hello', message: 'Background task test' }));
+Notifications.startBgTask({ type: 'notify', title: 'Test', message: 'Background Task says "kuku epta!"' });
 
 export default class App extends Component<{}> {
     render() {

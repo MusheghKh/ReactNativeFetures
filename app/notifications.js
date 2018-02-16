@@ -15,6 +15,8 @@ export default class Notifications {
 			switch(action.type) {
 				case 'web-fetch':
 					await fetch(action.url, action.options).then(callback);
+				case 'notify':
+					await Notifications.notify({ title: action.title, message: action.message });	
 				case 'custom':
 				default:
 					await callback();
