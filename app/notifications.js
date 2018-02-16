@@ -12,15 +12,17 @@ export default class Notifications {
 		Notifications.checkStatus();
 	}
 
-	static async planBgTask(action, callback) {
-			await RealmDB.save('BackgroundTasksPlanning', { id: createGUID(), action, callback });
+	static async planBgTask(action, callback, period, timeout) {
+			await RealmDB.save('BackgroundTasksPlanning', { id: createGUID(), action, callback, period, timeout });
 	}
 
 	static async startPlannedTask(id) {
-		await RealmDB.find('BackgroundTasksPlanning', id).then(({ action, callback }) => { Notifications.startBgTask(action, callback) });
+		await RealmDB.find('BackgroundTasksPlanning', id).then(({ action, callback, period, timeout }) => {
+			Notifications.startBgTask(action, callback, period, timeout);
+		});
 	}
 
-	static startBgTask(action, callback) {
+	static startBgTask(action, callback, period, timeout) {
 		BackgroundTask.define(async () => {
 			switch(action.type) {
 				case 'web-fetch':
@@ -36,7 +38,7 @@ export default class Notifications {
 			//Notifications.finishBgTask();
 		});
 
-		Notifications.setBgTaskPeriod();
+		Notifications.setBgTaskPeriod(period, timeout);
 	}
 
 	static cancelBgTask() {

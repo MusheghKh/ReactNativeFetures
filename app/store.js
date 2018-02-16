@@ -25,7 +25,10 @@ export const RealmSchemas = [
 		properties: {
 			id: { type: 'string', indexed: true },
 			action: 'data',
-			callback: 'data'
+			callback: 'data',
+			date: 'date?',
+			period: 'int?',
+			timeout: 'int?'
 		}
 	}
 ]
