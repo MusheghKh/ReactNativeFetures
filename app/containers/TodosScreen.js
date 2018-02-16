@@ -11,9 +11,8 @@ import Filters from '../components/todo/filters';
 
 import store from '../store';
 
-@connect(state => ({
-  loading: state.loading,
-	todos: state.todos.filter(todo => {
+@connect(({ loading, todos, filter }) => ({
+	todos: todos.filter(todo => {
 		switch(state.filter) {
 			case VisibilityFilters.COMPLETED:
 				return todo.completed;
@@ -24,7 +23,8 @@ import store from '../store';
 				return true;
 		}
 	}).filter(todo => todo.name.toLowerCase().includes(state.searchFilter)),
-	filter: state.filter
+  loading,
+	filter
 }))
 
 class TodosScreen extends Component {
