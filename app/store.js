@@ -18,5 +18,17 @@ export const RealmSchemas = [
 			name: 'string',
 			completed: { type: 'bool', default: false }
 		}
+	},
+	{
+		name: 'BackgroundTasksPlanning',
+		primaryKey: 'id',
+		properties: {
+			id: { type: 'string', indexed: true },
+			action: 'data',
+			callback: 'data',
+			date: 'date?',
+			period: 'int?',
+			timeout: 'int?'
+		}
 	}
 ]
