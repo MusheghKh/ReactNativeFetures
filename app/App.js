@@ -3,16 +3,18 @@ import { Platform, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 
 import MainStack from './Navigator';
+import firebase from 'react-native-firebase';
 import Notifications from './notifications';
 import store from './store';
+
+firebase.messaging().onMessage((msg) => {
+    let { title, body } = msg.fcm;
+    Notifications.notify({ title, message: body });
+});
 
 Notifications.startBgTask({ type: 'custom' }, () => Notifications.notify({ title: 'Hello', message: 'Background task test' }));
 
 export default class App extends Component<{}> {
-    componentDidMount() {
-        Notifications.notify({ title: 'Hello', message: 'Simple notifications test' });
-    }
-
     render() {
         return (
         	<Provider store={store}>

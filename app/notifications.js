@@ -1,6 +1,5 @@
 import { Alert } from 'react-native';
 import BackgroundTask from 'react-native-background-task';
-import firebase from 'react-native-firebase';
 import PushNotification from 'react-native-push-notification';
 // https://github.com/jamesisaac/react-native-background-task for full information on how this works.
 
@@ -16,11 +15,6 @@ export default class Notifications {
 			switch(action.type) {
 				case 'web-fetch':
 					await fetch(action.url, action.options).then(callback);
-				case 'firebase':
-					firebase.messaging().onMessage((msg) => {
-						let { title, body } = msg.fcm;
-						Notifications.notify({ title, message: body });
-					});
 				case 'custom':
 				default:
 					await callback();
