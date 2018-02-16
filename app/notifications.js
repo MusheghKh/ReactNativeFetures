@@ -1,6 +1,8 @@
 import { Alert } from 'react-native';
 import BackgroundTask from 'react-native-background-task';
 import PushNotification from 'react-native-push-notification';
+import RealmDB from './helpers/RealmDB';
+import createGUID from './helpers/createGUID';
 // https://github.com/jamesisaac/react-native-background-task for full information on how this works.
 
 export default class Notifications {
@@ -8,6 +10,14 @@ export default class Notifications {
 		BackgroundTask.schedule({ period, timeout });
 
 		Notifications.checkStatus();
+	}
+
+	static async planBgTask(action, callback) {
+			await RealmDB.save('BackgroundTasksPlanning', { id: createGUID(), action, callback });
+	}
+
+	static async startPlannedTask(id) {
+		await RealmDB.find('BackgroundTasksPlanning', id).then(({ action, callback }) => { Notifications.startBgTask(action, callback) });
 	}
 
 	static startBgTask(action, callback) {
@@ -19,7 +29,7 @@ export default class Notifications {
 					await Notifications.notify({ title: action.title, message: action.message });	
 				case 'custom':
 				default:
-					await callback();
+					await typeof callback === 'function' && callback();
 			}
 
 			// uncomment line below, if you want the task run only once
