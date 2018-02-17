@@ -13,6 +13,7 @@ import TodosScreen from './containers/TodosScreen';
 import WebViewScreen from './containers/WebViewScreen';
 import ImagePickerScreen from './containers/ImagePickerScreen';
 import TabsNavigatorScreen from './containers/TabsNavigatorScreen';
+import CameraScreen from './containers/CameraScreen';
 
 const DrawerNav = DrawerNavigator({
     Persons: { 
@@ -74,7 +75,14 @@ const DrawerNav = DrawerNavigator({
             title: "Tabs",
             drawerLabel: "Tabs",
         }
-    }
+    },
+    Camera: {
+        screen: CameraScreen,
+        navigationOptions: {
+            title: "Camera",
+            drawerLabel: "Camera",
+        }
+    },
 }, {
     navigationOptions: {
         drawerIcon: ({ tintColor }) => <Icon name="rocket" size={24} />

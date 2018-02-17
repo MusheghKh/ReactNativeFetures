@@ -10,7 +10,7 @@ import ImagePicker from 'react-native-image-picker';
 
 class ImagePickerScreen extends Component{
 	state = {
-		background: '',
+		background: {uri: ''},
 	};
 	imagePickerOptions = {
 		title: 'Select Background',
@@ -47,7 +47,7 @@ class ImagePickerScreen extends Component{
 				<Image
 					style={styles.backgroundImage}
 					// FIXME warning on source prop
-					source={{uri: this.state.background }}
+					source={this.state.background}
 				/>
 				<Button
 					color="grey"

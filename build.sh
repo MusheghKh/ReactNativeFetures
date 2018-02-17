@@ -29,7 +29,7 @@ esac
 
 # Launch Server
 yarn start &
-JS_SERVER_PID=$! &
+JS_SERVER_PID=$! &&
 
 if [ "$debug" = true ]; then
 	xdg-open http://localhost:8081/debugger-ui &
