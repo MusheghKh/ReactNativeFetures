@@ -1,7 +1,9 @@
 import requestReducer from './requestReducer';
-import sortingReducer from './sortingReducer';
+import loadingReducer from '../loadingReducer';
+import featureReducer from './featureReducer';
 
 export default {
 	images: requestReducer,
-	sorting: sortingReducer
+	loading: loadingReducer
+	feature: featureReducer
 }
