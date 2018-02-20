@@ -3,6 +3,8 @@ export const API_CALL = 'API_CALL';
 export const SAVE_IMAGE = 'SAVE_IMAGE';
 export const SAVE_IMAGES = 'SAVE_IMAGES';
 export const SELECT_NEW_FEATURE = 'SELECT_NEW_FEATURE';
+export const GET_PAGE_COUNT = 'GET_PAGE_COUNT';
+export const SELECT_PAGE = 'SELECT_PAGE';
 
 export const featureGroups = {
 	POPULAR: 'POPULAR',

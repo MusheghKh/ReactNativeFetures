@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Modal } from 'react-native';
-import { TabNavigator } from 'react-navigation';
+import { StyleSheet, View } from 'react-native';
 import { bindActionCreators, dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as todoActions from '../actions/todo/todoActions';
@@ -51,14 +50,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center'
-  },
-
-  list: {
-    flex: 1
-  },
-
-  add: {
-    flex: 1
   }
 });
 
