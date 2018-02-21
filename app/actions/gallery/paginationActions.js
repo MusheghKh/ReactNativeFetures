@@ -1,4 +1,4 @@
-import { SELECT_PAGE, GET_PAGE_COUNT } from './actionTypes';
+import { SELECT_PAGE, GET_PAGE_COUNT, SLIDE_PAGE_SETUP } from './actionTypes';
 
 export function selectPage(page) {
 	return {
@@ -11,5 +11,12 @@ export function getPageCount(pageCount) {
 	return {
 		type: GET_PAGE_COUNT,
 		pageCount
+	}
+}
+
+export const slidePageSetup(arrow, count) {
+	return {
+		type: SLIDE_PAGE_SETUP,
+		count
 	}
 }

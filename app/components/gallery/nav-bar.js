@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { SearchBar, Tile } from 'react-native-elements';
-import { capitalize, replaceLodash } from '../../helpers/custom-text-transformations';
+import { capitalize, replaceLodash } from '../../helpers/custom-helper-functions';
 
 class NavBar extends Component {
 	render() {
