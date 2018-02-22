@@ -5,8 +5,7 @@ import {
     FlatList,
     ActivityIndicator,
     StyleSheet,
-    Alert,
-    Dimensions,
+    Alert
 } from 'react-native';
 import { List, ListItem, SearchBar, Tile } from "react-native-elements";
 import NoResults from '../helpers/no-results';

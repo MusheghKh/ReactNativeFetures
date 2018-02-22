@@ -16,7 +16,7 @@ class ArrowButtons extends Component {
 
 	render() {
 		const { arrow, activePage, pageCount } = this.state;
-		const { touchableButton, active, normal, pageNumStyle } = styles;
+		const { touchableButton, active, pageNumStyle } = styles;
 
 		return (
 			<View>

@@ -13,12 +13,7 @@ import Pagination from '../components/gallery/pagination';
 import store from '../store';
 //fetch(`${URL}/search?term=${keyword}&page=${page}&rpp=20&image_size=440&sort=${SORTING}&consumer_key=${CONSUMER_KEY}`);
 
-@connect(({ loading, images, pages, feature }) => ({
-	loading,
-	images,
-	pages,
-	feature
-}))
+@connect(({ loading, images, pages, feature, selectedUris }) => ({ loading, images, pages, feature, selectedUris }))
 
 class GalleryScreen extends Component {
 	render() {
@@ -32,6 +27,9 @@ class GalleryScreen extends Component {
 					{...bindActionCreators(featureActions, dispatch)} />
 				<ImageGrid
 					images={images}
+					pages={pages}
+					feature={feature}
+					selectedUris={selectedUris}
 					loading={loading}
 					{...bindActionCreators(requestActions, dispatch)} />
 				<Pagination

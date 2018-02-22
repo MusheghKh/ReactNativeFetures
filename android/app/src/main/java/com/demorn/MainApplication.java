@@ -3,6 +3,7 @@ package com.demorn;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
 import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFSPackage(),
             new BackgroundTaskPackage(),
             new ImagePickerPackage(),
             new ReactNativePushNotificationPackage(),

@@ -1,7 +1,11 @@
 export const LOADING = 'LOADING';
 export const API_CALL = 'API_CALL';
 export const SAVE_IMAGE = 'SAVE_IMAGE';
+export const SELECT_IMAGE = 'SELECT_IMAGE';
+export const DISSELECT_IMAGE = 'DISSELECT_IMAGE';
 export const SAVE_IMAGES = 'SAVE_IMAGES';
+export const SELECT_GRID = 'SELECT_GRID';
+export const DISSELECT_GRID = 'DISSELECT_GRID';
 export const SELECT_NEW_FEATURE = 'SELECT_NEW_FEATURE';
 export const GET_PAGE_COUNT = 'GET_PAGE_COUNT';
 export const SELECT_PAGE = 'SELECT_PAGE';

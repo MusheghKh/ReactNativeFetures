@@ -2,7 +2,7 @@ import { GALLERY_API_URL, CONSUMER_KEY } from '../../helpers/constants';
 import { API_CALL, GET_PAGE_COUNT } from './actionTypes';
 import { asyncDispatcher } from '../../helpers/RealmDB';
 
-export function sendRequest(keyword, page, feature) {
+export function sendRequest(keyword, page, feature, getPageCount = true) {
 	const searchTerms = keyword ? `/search?term=${keyword}&` : '?';
 
   return asyncDispatcher(dispatch => {
@@ -10,8 +10,8 @@ export function sendRequest(keyword, page, feature) {
 	  	.then(response => response.json())
 	  	.then(response => {
 	  		dispatch({ type: API_CALL, images: response.photos });
-	  		dispatch({ type: GET_PAGE_COUNT, pageCount: response.total_pages });
+	  		getPageCount && dispatch({ type: GET_PAGE_COUNT, pageCount: response.total_pages });
 	  	})
-	  	.catch(error => throw new Error(error));
+	  	.catch(error => { throw new Error(error) });
   });
 }
