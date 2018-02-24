@@ -1,13 +1,13 @@
 import requestReducer from './requestReducer';
-import loadingReducer from '../loadingReducer';
+import loadingReducer from '../loading';
 import paginationReducer from './paginationReducer';
 import featureReducer from './featureReducer';
-import imagesReducer from './imagesReducer';
+import imageReducer from './imageReducer';
 
 export default {
 	images: requestReducer,
 	loading: loadingReducer,
-	page: paginationReducer,
+	pages: paginationReducer,
 	feature: featureReducer,
-	savings: imagesReducer 
+	selectedUris: imageReducer 
 }

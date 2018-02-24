@@ -17,7 +17,7 @@ import store from '../store';
 
 class GalleryScreen extends Component {
 	render() {
-		const { loading, images, pages, feature } = this.props;
+		const { loading, images, pages, feature, selectedUris } = this.props;
 
 		return (
 			<View style={styles.container}>

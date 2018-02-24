@@ -1,6 +1,6 @@
 import { SELECT_PAGE, GET_PAGE_COUNT, SLIDE_PAGE_SETUP } from '../../actions/gallery/actionTypes';
 
-export function paginationReducer(pages = { page: 1, pageCount: 1 }, action = {}) {
+export default function paginationReducer(pages = { page: 1, pageCount: 1 }, action = {}) {
 	const { page, pageCount, type, count } = action;
 	const sliderPage = type === SLIDE_PAGE_SETUP && (pages.pageCount > (10**count + pages.page) && 10**count + pages.page || pages.pageCount);
 

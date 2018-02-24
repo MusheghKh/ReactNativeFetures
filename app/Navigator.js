@@ -67,7 +67,7 @@ const DrawerNav = DrawerNavigator({
             title: 'Gallery',
             drawerLabel: 'Gallery'
         }
-    }
+    },
 
     ImagePicker: {
         screen: ImagePickerScreen,

@@ -21,12 +21,11 @@ const styles = StyleSheet.create({
 	container: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		color: '#0099CC'
 	},
 	tab: {
-		background: '#fff',
-		color: 'inherit',
-		borderRadius: '10%'
+		backgroundColor: '#fff',
+		color: '#0099CC',
+		borderRadius: 10
 	}
 });
 

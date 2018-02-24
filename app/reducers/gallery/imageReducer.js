@@ -1,7 +1,7 @@
-import { SELECT_GRID, SELECT_IMAGE, DISSELECT_IMAGE, SAVE_IMAGE, SAVE_IMAGES } from '../../actions/gallery/actionTypes';
+import { SELECT_GRID, DISSELECT_GRID, SELECT_IMAGE, DISSELECT_IMAGE, SAVE_IMAGE, SAVE_IMAGES } from '../../actions/gallery/actionTypes';
 import { Alert } from 'react-native';
 
-export function imageReducer(selectedUris = [], action = {}) {
+export default function imageReducer(selectedUris = [], action = {}) {
 	const { type, uri } = action;
 	const index = selectedUris.find(selectedUri => selectedUri === uri);
 

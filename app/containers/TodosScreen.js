@@ -10,9 +10,9 @@ import Filters from '../components/todo/filters';
 
 import store from '../store';
 
-@connect(({ loading, todos, filter }) => ({
+@connect(({ loading, todos, filter, searchFilter }) => ({
 	todos: todos.filter(todo => {
-		switch(state.filter) {
+		switch(filter) {
 			case VisibilityFilters.COMPLETED:
 				return todo.completed;
 			case VisibilityFilters.INCOMPLETE:
@@ -21,7 +21,7 @@ import store from '../store';
 			default:
 				return true;
 		}
-	}).filter(todo => todo.name.toLowerCase().includes(state.searchFilter)),
+	}).filter(todo => todo.name.toLowerCase().includes(searchFilter)),
   loading,
 	filter
 }))

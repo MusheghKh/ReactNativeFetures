@@ -93,21 +93,19 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	touchableButton: {
-		borderRadius: '50%',
+		borderRadius: 50,
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
 	active: {
 		color: '#81c04d',
-		background: '#fff'
+		backgroundColor: '#fff'
 	},
 	normal: {
 		color: '#333',
-		background: '#f1f1eb'
+		backgroundColor: '#f1f1eb'
 	},
 	pageNumStyle: {
-		color: 'inherit',
-		background: 'inherit',
 		textAlign: 'center'
 	}
 });
