@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ImageBackground, Text, Button, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, ImageBackground, Text, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class GalleryImage extends Component {
@@ -30,30 +30,31 @@ class GalleryImage extends Component {
 	}
 
 	checkMultiSelection = () => {
-		const { multiSelectMode, uri, iconChecked } = this.state;
+		const { multiSelectMode, uri, iconChecked, isSelected } = this.state;
 
 		if(multiSelectMode) {
 			return (<Icon
 				name={iconChecked ? "ios-checkmark-circle" : "ios-checkmark-circle-outline"}
-				size={20}
+				size={30}
 				color="#81c04d"
 				onPress={() => this.checkBoxSelection()}/>);
-		} else {
-			return (<Button onPress={() => this.props.saveImage(uri)} title="Save" style={styles.saveButton}/>)
+		} else if(isSelected) {
+			return (<Button color='#81c04d' onPress={() => this.props.saveImage(uri)} title="Save" style={styles.saveButton}/>)
 		}
 	}
 
 	render() {
+		const { style } = this.props;
 		const { uri, name, isSelected } = this.state;
-		const { container, selected, normal, text } = styles;
+		const { container, selected, normal, text, imgStyle } = styles;
 
 		return (
 			<TouchableOpacity
-				style={container}
+				style={[container, style]}
 				activeOpacity={0.7}
 				onPress={() => this.toggleImageSelection()}
-				onLongPress={() => this.props.toggleGridSelection()}>
-				<ImageBackground source={{ uri }} style={[imgStyle, isSelected ? selected : normal]}>
+				onLongPress={() => this.toggleGridSelection()}>
+				<ImageBackground source={{ uri }} style={[imgStyle, isSelected ? selected : normal]} blurRadius={isSelected ? 2 : 0}>
 					{isSelected && <Text style={text}>{name}</Text>}
 					{this.checkMultiSelection()}
 				</ImageBackground>
@@ -64,26 +65,27 @@ class GalleryImage extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		width: Dimensions.get('window').width / 3,
-		flexDirection: 'column' 
+		flexDirection: 'column'
 	},
 	imgStyle: {
 		flex: 1,
+		flexDirection: 'column', 
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center' 
 	},
 	normal: {
 		opacity: 1
 	},
 	selected: {
-		opacity: 0.7
+		opacity: 0.5
 	},
 	text: {
-		color: '#d4d4c9'
+		marginBottom: 10,
+		color: '#383838',
+		opacity: 1
 	},
 	saveButton: {
-		backgroundColor: 'transparent',
-		color: '#d4d4c9'
+		backgroundColor: 'transparent'
 	}
 });
 

@@ -1,6 +1,9 @@
 export const capitalize = word => {
-  let lower = word.toLowerCase();
-  return lower.slice(0, 1).toUpperCase() + lower.slice(1);
+	// in case the "word" actually consists of many words
+	return word.split(' ').map(chunk => {
+	  let lower = chunk.toLowerCase();
+	  return lower.slice(0, 1).toUpperCase() + lower.slice(1);
+	}).join(' ');
 }
 
 export const replaceLodash = word => {

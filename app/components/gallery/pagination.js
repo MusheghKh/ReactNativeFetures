@@ -1,42 +1,47 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Dimensions } from 'react-native';
 import { Range, stringDuplication } from '../../helpers/custom-helper-functions';
 
 class ArrowButtons extends Component {
 	constructor(props) {
 		super(props);
 		const { arrow, activePage, pageCount } = this.props;
-		this.state = { arrow, activePage, pageCount };
+		this.state = { arrow, activePage, pageCount, flexDirection: arrow === '<' ? 'row' : 'row-reverse' };
 	}
 
-	checkButtonDisability = () => {
-		const { arrow, activePage, pageCount } = this.state;
+	componentWillReceiveProps(nextProps) {
+		const { arrow, activePage, pageCount } = nextProps;
+		this.setState({ arrow, activePage, pageCount });
+	}
+
+	checkButtonDisability = (arrow, activePage, pageCount) => {
 		return arrow === '<' && Range(1, 10).includes(activePage) || arrow === '>' && Range(pageCount - 10, pageCount).includes(activePage);
 	}
 
 	render() {
-		const { arrow, activePage, pageCount } = this.state;
+		const { arrow, activePage, pageCount, flexDirection } = this.state;
 		const { touchableButton, active, pageNumStyle } = styles;
+		const disabled = this.checkButtonDisability(arrow, activePage, pageCount);
 
 		return (
-			<View>
+			<View style={{ flexDirection }}>
 				<TouchableOpacity
-					style={[touchableButton, active]}
-					disabled={this.checkButtonDisability()}
-					onPress={() => this.props.slidePageSetup(arrow, 3)}>
-						<Text style={pageNumStyle}>{stringDuplication(arrow, 3)}</Text>
+					style={touchableButton}
+					disabled={disabled}
+					onPress={() => this.props.slidePageSetup(arrow, 1000)}>
+						<Text style={[pageNumStyle, active]}>{stringDuplication(arrow, 3)}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					style={[touchableButton, active]}
-					disabled={this.checkButtonDisability()}
-					onPress={() => this.props.slidePageSetup(arrow, 2)}>
-						<Text style={pageNumStyle}>{stringDuplication(arrow, 2)}</Text>
+					style={touchableButton}
+					disabled={disabled}
+					onPress={() => this.props.slidePageSetup(arrow, 100)}>
+						<Text style={[pageNumStyle, active]}>{stringDuplication(arrow, 2)}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					style={[touchableButton, active]}
-					disabled={this.checkButtonDisability()}
-					onPress={() => this.props.slidePageSetup(arrow, 1)}>
-						<Text style={pageNumStyle}>{stringDuplication(arrow, 1)}</Text>
+					style={touchableButton}
+					disabled={disabled}
+					onPress={() => this.props.slidePageSetup(arrow, 10)}>
+						<Text style={[pageNumStyle, active]}>{stringDuplication(arrow, 1)}</Text>
 				</TouchableOpacity>
 			</View>
 		)
@@ -46,14 +51,12 @@ class ArrowButtons extends Component {
 class Pagination extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			activePage: this.props.pages.page,
-			pageCount: this.props.pages.pageCount
-		}
+		const { page, pageCount } = this.props.pages;
+		this.state = { activePage: page, pageCount }
 	}
 
 	componentWillReceiveProps(nextProps) {
-		const { page, pageCount } = nextProps;
+		const { page, pageCount } = nextProps.pages;
 
 		if(page && pageCount) {
 			this.setState({ activePage: page, pageCount });
@@ -68,19 +71,19 @@ class Pagination extends Component {
 
 		return (
 			<View style={container}>
-				<ArrowButtons arrow='<' activePage={activePage} pageCount={pageCount}/>
+				<ArrowButtons arrow='<' activePage={activePage} pageCount={pageCount} slidePageSetup={this.props.slidePageSetup}/>
 				{Array(pageCount > 10 && 10 || pageCount).fill().map((elem, index) => {
 					const pageNum = index + 1;
 					return (
 						<TouchableOpacity
 							key={pageNum}
-							style={[touchableButton, (pageNum === activePage ? active : normal)]}
+							style={touchableButton}
 							onPress={() => this.props.selectPage(pageNum)}>
-								<Text style={pageNumStyle}>{pageNum}</Text>
+								<Text style={[pageNumStyle, (pageNum === activePage ? active : normal)]}>{pageNum}</Text>
 						</TouchableOpacity>
 					)
 				})}
-				<ArrowButtons arrow='>' activePage={activePage} pageCount={pageCount}/>
+				<ArrowButtons arrow='>' activePage={activePage} pageCount={pageCount} slidePageSetup={this.props.slidePageSetup}/>
 			</View>
 		)
 	}
@@ -88,22 +91,22 @@ class Pagination extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		justifyContent: 'center',
+		flexDirection: 'row',
+		justifyContent: 'space-around',
 		alignItems: 'center'
 	},
 	touchableButton: {
-		borderRadius: 50,
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	active: {
-		color: '#81c04d',
+		borderRadius: 20,
+		padding: 5,
+		justifyContent: 'space-between',
+		alignItems: 'center',
 		backgroundColor: '#fff'
 	},
+	active: {
+		color: '#81c04d'
+	},
 	normal: {
-		color: '#333',
-		backgroundColor: '#f1f1eb'
+		color: '#0099CC'
 	},
 	pageNumStyle: {
 		textAlign: 'center'
