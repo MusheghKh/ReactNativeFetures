@@ -10,7 +10,6 @@ export default function paginationReducer(pages = { page: 1, pageCount: 1 }, act
 		case GET_PAGE_COUNT:
 			return { page: pages.page, pageCount };
 		case SLIDE_PAGE_SETUP:
-		debugger;
 			return { page: sliderPage, pageCount: pages.pageCount };
 		default:
 			return pages;
