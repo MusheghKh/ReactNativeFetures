@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Dimensions } from 'react-native';
-import { Range, stringDuplication } from '../../helpers/custom-helper-functions';
+import { Range, stringDuplication, paginationController } from '../../helpers/custom-helper-functions';
 
 class ArrowButtons extends Component {
 	constructor(props) {
@@ -20,7 +20,7 @@ class ArrowButtons extends Component {
 
 	render() {
 		const { arrow, activePage, pageCount, flexDirection } = this.state;
-		const { touchableButton, active, pageNumStyle } = styles;
+		const { touchableButton, active, pageNumStyle, arrowStyle } = styles;
 		const disabled = this.checkButtonDisability(arrow, activePage, pageCount);
 
 		return (
@@ -28,20 +28,25 @@ class ArrowButtons extends Component {
 				<TouchableOpacity
 					style={touchableButton}
 					disabled={disabled}
+					numberOfLines={1}
 					onPress={() => this.props.slidePageSetup(arrow, 1000)}>
-						<Text style={[pageNumStyle, active]}>{stringDuplication(arrow, 3)}</Text>
+						<Text style={[arrowStyle, active]}>{stringDuplication(arrow, 3)}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={touchableButton}
 					disabled={disabled}
+					fontSize={15}
+					numberOfLines={1}
 					onPress={() => this.props.slidePageSetup(arrow, 100)}>
-						<Text style={[pageNumStyle, active]}>{stringDuplication(arrow, 2)}</Text>
+						<Text style={[arrowStyle, active]}>{stringDuplication(arrow, 2)}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={touchableButton}
 					disabled={disabled}
+					fontSize={20}
+					numberOfLines={1}
 					onPress={() => this.props.slidePageSetup(arrow, 10)}>
-						<Text style={[pageNumStyle, active]}>{stringDuplication(arrow, 1)}</Text>
+						<Text style={[arrowStyle, active]}>{stringDuplication(arrow, 1)}</Text>
 				</TouchableOpacity>
 			</View>
 		)
@@ -52,34 +57,56 @@ class Pagination extends Component {
 	constructor(props) {
 		super(props);
 		const { page, pageCount } = this.props.pages;
-		this.state = { activePage: page, pageCount }
+		this.state = { activePage: page, pageCount, visiblePagination: Range(1, 10) }
 	}
 
 	componentWillReceiveProps(nextProps) {
 		const { page, pageCount } = nextProps.pages;
+		const { visiblePagination, activePage } = this.state;
+		const controllerParams = {
+			start: visiblePagination[0],
+			end: visiblePagination[visiblePagination.length - 1],
+			count: page - activePage,
+			pageCount
+		}
 
 		if(page && pageCount) {
-			this.setState({ activePage: page, pageCount });
+			this.setState({ activePage: page, pageCount, visiblePagination: paginationController(controllerParams) });
 		} else {
 			this.setState({ activePage: 0, pageCount: 0 });
 		}
 	}
 
+	fontAdjust = number => {
+		switch(`${number}`.length) {
+			case 1:
+				return { fontSize: 15 };
+			case 2:
+				return { fontSize: 13 };
+			case 3:
+				return { fontSize: 10 };
+			default:
+				return { fontSize: 8 };
+		}
+	}
+
 	render() {
-		const { activePage, pageCount } = this.state;
+		const { activePage, pageCount, visiblePagination } = this.state;
 		const { container, active, normal, pageNumStyle, touchableButton } = styles;
 
 		return (
 			<View style={container}>
 				<ArrowButtons arrow='<' activePage={activePage} pageCount={pageCount} slidePageSetup={this.props.slidePageSetup}/>
-				{Array(pageCount > 10 && 10 || pageCount).fill().map((elem, index) => {
-					const pageNum = index + 1;
+				{visiblePagination.map(page => {
+
 					return (
 						<TouchableOpacity
-							key={pageNum}
+							key={page}
 							style={touchableButton}
-							onPress={() => this.props.selectPage(pageNum)}>
-								<Text style={[pageNumStyle, (pageNum === activePage ? active : normal)]}>{pageNum}</Text>
+							onPress={() => this.props.selectPage(page)}>
+								<Text
+									style={[pageNumStyle, (page === activePage ? active : normal), this.fontAdjust(page)]}
+									numberOfLines={1}>{page}</Text>
 						</TouchableOpacity>
 					)
 				})}
@@ -109,7 +136,14 @@ const styles = StyleSheet.create({
 		color: '#0099CC'
 	},
 	pageNumStyle: {
-		textAlign: 'center'
+		textAlign: 'center',
+		lineHeight: 20,
+		width: 20
+	},
+	arrowStyle: {
+		textAlign: 'center',
+		width: 16,
+		fontSize: 10
 	}
 });
 

@@ -15,7 +15,7 @@ class ImageGrid extends Component {
 		const { images, loading, feature, pages, sendRequest } = nextProps;
 		this.setState({ loading }, () => images.length && this.setState({ images }));
 		if(this.state.pages.page !== pages.page || this.state.feature !== nextProps.feature) {
-			this.setState({ pages, feature }, () => sendRequest('', pages.page, feature));
+			this.setState({ pages, feature }, () => sendRequest('', pages.page, feature, pages.pageCount == null));
 		}
 	}
 
