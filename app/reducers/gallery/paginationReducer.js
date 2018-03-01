@@ -2,7 +2,6 @@ import { SELECT_PAGE, GET_PAGE_COUNT, SLIDE_PAGE_SETUP } from '../../actions/gal
 
 export default function paginationReducer(pages = { page: 1, pageCount: 1000 }, action = {}) {
 	const { page, pageCount, type, count } = action;
-	const sliderPage = type === SLIDE_PAGE_SETUP && (pages.pageCount > (count + pages.page) && count + pages.page || pages.pageCount);
 
 	switch(type) {
 		case SELECT_PAGE:
@@ -10,7 +9,12 @@ export default function paginationReducer(pages = { page: 1, pageCount: 1000 }, 
 		case GET_PAGE_COUNT:
 			return { page: pages.page, pageCount };
 		case SLIDE_PAGE_SETUP:
-			return { page: sliderPage, pageCount: pages.pageCount };
+			if(count < 0) {
+				return { page: (count + pages.page) < 1 && 1 || count + pages.page, pageCount: pages.pageCount }
+			}
+			if(count > 0) {
+				return { page: (pages.pageCount > (count + pages.page) && count + pages.page || pages.pageCount), pageCount: pages.pageCount }
+			}
 		default:
 			return pages;
 	}

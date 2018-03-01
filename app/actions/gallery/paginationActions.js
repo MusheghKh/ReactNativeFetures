@@ -17,6 +17,6 @@ export function getPageCount(pageCount) {
 export function slidePageSetup(arrow, count) {
 	return {
 		type: SLIDE_PAGE_SETUP,
-		count: arrow === '<' ? 1 - count : count
+		count: arrow === '<' ?  -count : count
 	}
 }
