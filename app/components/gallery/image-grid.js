@@ -6,22 +6,23 @@ import LoadingSpinner from '../../helpers/loading-spinner';
 class ImageGrid extends Component {
 	constructor(props) {
 		super(props);
-		const { images, loading, feature, pages } = this.props;
+		const { images, loading, feature, pages, searchKey } = this.props;
 
-		this.state = { images, loading, feature, pages }
+		this.state = { images, loading, feature, pages, searchKey }
 	}
 
 	componentWillReceiveProps(nextProps) {
-		const { images, loading, feature, pages, sendRequest } = nextProps;
+		const { images, loading, feature, pages, searchKey, sendRequest } = nextProps;
+		const searchValueChange = this.state.searchKey !== searchKey;
 		this.setState({ loading }, () => images.length && this.setState({ images }));
-		if(this.state.pages.page !== pages.page || this.state.feature !== nextProps.feature) {
-			this.setState({ pages, feature }, () => sendRequest('', pages.page, feature, pages.pageCount == null));
+		if(this.state.pages.page !== pages.page || this.state.feature !== feature || searchValueChange) {
+			this.setState({ pages, feature, searchKey }, () => sendRequest(searchKey, pages.page, feature, pages.pageCount == null || searchValueChange));
 		}
 	}
 
 	componentDidMount() {
-		const { pages, feature, loading, sendRequest } = this.props;
-		sendRequest('', pages.page, feature, pages.pageCount);
+		const { pages, feature, searchKey, loading, sendRequest } = this.props;
+		sendRequest(searchKey, pages.page, feature, pages.pageCount);
 		this.setState({ loading });
 	}
 
@@ -32,7 +33,7 @@ class ImageGrid extends Component {
 		return (
 			<ScrollView contentContainerStyle={container}>
 				{loading && <LoadingSpinner loading={loading}/>}
-				{!loading && images.map(({ uri, name }, index) => (<GalleryImage key={index} style={image} uri={uri} name={name} />))}
+				{!loading && images.map(({ uri, name }, index) => (<GalleryImage key={`${name}${index}`} style={image} uri={uri} name={name} />))}
 			</ScrollView>
 		)
 	}

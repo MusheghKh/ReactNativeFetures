@@ -5,12 +5,12 @@ import { capitalize, replaceLodash } from '../../helpers/custom-helper-functions
 
 class NavBar extends Component {
 	render() {
-		const { features, activeTab, selectFeature } = this.props;
+		const { features, activeTab, selectFeature, search } = this.props;
 		const { container, tabs, tab, activeTabBg, tabText, activeTabText } = styles;
 
 		return(
 			<View style={container}>
-				<SearchBar placeholder='' lightTheme round onSubmitEditing={input => this.props.search(input)}/>
+				<SearchBar placeholder='' lightTheme round onSubmitEditing={({ nativeEvent }) => search(nativeEvent.text)}/>
 				<View style={tabs}>
 					{Object.keys(features).map(feature => (<TouchableOpacity
 						key={capitalize(replaceLodash(features[feature]))}

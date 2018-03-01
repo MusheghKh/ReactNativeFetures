@@ -1,5 +1,6 @@
 export const LOADING = 'LOADING';
 export const API_CALL = 'API_CALL';
+export const SEARCH_ON_SUBMIT = 'SEARCH_ON_SUBMIT';
 export const SAVE_IMAGE = 'SAVE_IMAGE';
 export const SELECT_IMAGE = 'SELECT_IMAGE';
 export const DISSELECT_IMAGE = 'DISSELECT_IMAGE';
