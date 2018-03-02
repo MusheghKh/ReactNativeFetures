@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
-import { bindActionCreators, dispatch } from 'redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as requestActions from '../actions/gallery/requestActions';
 import * as navBarActions from '../actions/gallery/navBarActions';
@@ -15,7 +15,7 @@ import store from '../store';
 
 class GalleryScreen extends Component {
 	render() {
-		const { loading, images, pages, navBar, selectedUris, dispatch } = this.props;
+		const { loading, images, pages, navBar, dispatch } = this.props;
 		const { feature, searchKey } = navBar;
 
 		return (
@@ -30,8 +30,8 @@ class GalleryScreen extends Component {
 					pages={pages}
 					searchKey={searchKey}
 					feature={feature}
-					selectedUris={selectedUris}
 					loading={loading}
+					dispatch={dispatch}
 					{...bindActionCreators(requestActions, dispatch)} />
 				<Pagination
 					pages={pages}

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Dimensions } from 'react-native';
 import GalleryImage from './image';
+import { bindActionCreators } from 'redux';
+import * as imageActions from '../../actions/gallery/imageActions';
 import LoadingSpinner from '../../helpers/loading-spinner';
 
 class ImageGrid extends Component {
@@ -8,7 +10,7 @@ class ImageGrid extends Component {
 		super(props);
 		const { images, loading, feature, pages, searchKey } = this.props;
 
-		this.state = { images, loading, feature, pages, searchKey }
+		this.state = { images, loading, feature, pages, searchKey, multiSelectMode: false }
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -16,7 +18,10 @@ class ImageGrid extends Component {
 		const searchValueChange = this.state.searchKey !== searchKey;
 		this.setState({ loading }, () => images.length && this.setState({ images }));
 		if(this.state.pages.page !== pages.page || this.state.feature !== feature || searchValueChange) {
-			this.setState({ pages, feature, searchKey }, () => sendRequest(searchKey, pages.page, feature, pages.pageCount == null || searchValueChange));
+			this.setState({ pages, feature, searchKey, multiSelectMode: false }, () => {
+				imageActions.disselectGrid();
+				sendRequest(searchKey, pages.page, feature, pages.pageCount == null || searchValueChange);
+			});
 		}
 	}
 
@@ -27,13 +32,21 @@ class ImageGrid extends Component {
 	}
 
 	render() {
-		const { images, loading } = this.state;
+		const { images, loading, multiSelectMode } = this.state;
+		const { dispatch } = this.props;
 		const { container, image } = styles;
 
 		return (
 			<ScrollView contentContainerStyle={container}>
 				{loading && <LoadingSpinner loading={loading}/>}
-				{!loading && images.map(({ uri, name }, index) => (<GalleryImage key={`${name}${index}`} style={image} uri={uri} name={name} />))}
+				{!loading && images.map(({ uri, name }, index) => (<GalleryImage
+					key={`${name}${index}`}
+					style={image}
+					uri={uri}
+					isSelected={multiSelectMode}
+					name={name}
+					toggleGridSelection={(multiSelectMode, callback) => this.setState({ multiSelectMode }, callback)}
+					{...bindActionCreators(imageActions, dispatch)}/>))}
 			</ScrollView>
 		)
 	}
