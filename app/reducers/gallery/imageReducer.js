@@ -1,15 +1,15 @@
 import { SELECT_GRID, DISSELECT_GRID, SELECT_IMAGE, DISSELECT_IMAGE, SAVE_IMAGE, SAVE_IMAGES } from '../../actions/gallery/actionTypes';
 import { Alert } from 'react-native';
 
-export default function imageReducer(selectedUris = [], action = {}) {
-	const { type, uri } = action;
-	const index = selectedUris.find(selectedUri => selectedUri === uri);
+export default function imageReducer(selectedImages = [], action = {}) {
+	const { type, uri, img } = action;
+	const index = selectedImages.find(({ uri }) => uri === uri);
 
 	switch(type) {
 		case SELECT_IMAGE:
-			return selectedUris.concat(uri);
+			return selectedImages.concat(img);
 		case DISSELECT_IMAGE:
-			return !!selectedUris.splice(index, 1).length && selectedUris;
+			return !!selectedImages.splice(index, 1).length && selectedImages.slice();
 		case SAVE_IMAGE:
 		case SAVE_IMAGES:
 			Alert.alert('Image(s) successfully saved.');
@@ -18,6 +18,6 @@ export default function imageReducer(selectedUris = [], action = {}) {
 			return [];
 		case SELECT_GRID:
 		default:
-			return selectedUris;
+			return selectedImages;
 	}
 }

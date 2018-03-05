@@ -6,7 +6,7 @@ import MainStack from './Navigator';
 import firebase from 'react-native-firebase';
 import Notifications from './notifications';
 import store from './store';
-import RNFB from 'react-native-fetch-blob';
+import FS from './helpers/fs';
 firebase.messaging().onMessage((msg) => {
     let { title, body } = msg.fcm;
     Notifications.notify({ title, message: body });
@@ -16,7 +16,6 @@ firebase.messaging().onMessage((msg) => {
 
 export default class App extends Component<{}> {
     render() {
-        console.log(RNFB.fs.dirs);
         return (
         	<Provider store={store}>
         		<MainStack />

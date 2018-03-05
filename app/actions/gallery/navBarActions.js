@@ -1,15 +1,5 @@
-import { SELECT_NEW_FEATURE, SEARCH_ON_SUBMIT } from './actionTypes';
+import { SELECT_NEW_FEATURE, SEARCH_ON_SUBMIT, NAV_BAR_SAVE } from './actionTypes';
 
-export function selectFeature(feature) {
-	return {
-		type: SELECT_NEW_FEATURE,
-		feature
-	}
-}
+export const selectFeature = feature => ({ type: SELECT_NEW_FEATURE, feature })
 
-export function search(searchKey) {
-	return {
-		type: SEARCH_ON_SUBMIT,
-		searchKey
-	}
-}
+export const search = searchKey => ({ type: SEARCH_ON_SUBMIT, searchKey })

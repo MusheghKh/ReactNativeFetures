@@ -9,8 +9,7 @@ class ArrowButtons extends Component {
 		this.state = { arrow, activePage, pageCount, flexDirection: arrow === '<' ? 'row' : 'row-reverse' };
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const { arrow, activePage, pageCount } = nextProps;
+	componentWillReceiveProps({ arrow, activePage, pageCount }) {
 		this.setState({ arrow, activePage, pageCount });
 	}
 

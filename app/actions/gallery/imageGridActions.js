@@ -10,7 +10,7 @@ export function sendRequest(keyword, page, feature, getPageCount = true) {
 	  	.then(response => response.json())
 	  	.then(response => {
 	  		dispatch({ type: API_CALL, images: response.photos });
-	  		getPageCount && dispatch({ type: GET_PAGE_COUNT, pageCount: response.total_pages });
+	  		getPageCount && dispatch({ type: GET_PAGE_COUNT, pageCount: response.total_pages || 1 });
 	  	})
 	  	.catch(error => { throw new Error(error) });
   });

@@ -49,9 +49,9 @@ export default class RealmDB {
 }
 
 // loader will appear by default on any async dispatching, you can hide it by giving argument useLoader false
-export const asyncDispatcher = (callback, useLoader = true) => {
+export const asyncDispatcher = (callback, useLoader = { type: 'LOADING' }) => {
 	return dispatch => {
-		useLoader && dispatch({ type: LOADING });
+		useLoader && dispatch(useLoader);
 		setTimeout(() => callback(dispatch));
 	}
 }

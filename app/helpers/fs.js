@@ -18,32 +18,44 @@ const dirsMapping = {
 	"default": fs.dirs.DocumentDir
 }
 
+const availableDirs = [
+	"picture",
+	"download",
+	"main_bundle",
+	"movie",
+	"music",
+	"lib",
+	"cache",
+	"dcim",
+	"document",
+	"sd_card_app",
+	"sd_card",
+	"default"
+]
+
 // TODO: update many other functions if needed
 export default class FS {
-	static download(url = '', savingDir = dirsMapping["default"]) {
+	static download({uri, name, imgFormat}, savingDir = "default", method = 'GET') {
 		const options = {
 			fileCache: true,
 			addAndroidDownloads: {
 				useDownloadManager: true,
 				notification: false,
-				path: `${savingDir}/${(new Date()).getTime()}.${FS.getFileExtension(url)}`,
-				description:  capitalize(replaceLodash(Object.keys(dirsMapping).find((elem, index, arr) => arr[elem] === savingDir))) || 'Document'
+				path: `${dirsMapping[savingDir]}/${(new Date()).getTime()}_${name || savingDir}.${imgFormat || FS.getFileExtension(uri)}`,
+				description:  capitalize(replaceLodash(Object.keys(dirsMapping).find(elem => elem === savingDir))) || 'Document'
 			}
 		}
-		config(options).fetch('GET', url).then(res => console.log(res));
+
+		return config(options).fetch(method, uri).catch(error => { throw new Error(error) });
 	}
 
-	/* urlCount is a private func argument */
-	static multiDownload(urlArr = [], savingDir = dirsMapping["default"], urlCount = urlArr.length) {
-		if(!urlCount) {
-			return;
-		}
-
-		FS.download(urlArr[urlCount - 1], savingDir).then(res => FS.multiDownload(urlArr, savingDir, urlCount - 1));
+	/* uriCount is a private func argument */
+	static multiDownload(imgArr = [], savingDir = "default", method = 'GET') {
+		return Promise.all(imgArr.map(img => FS.download(img, savingDir, method)));
 	}
 
 	static getDefaultDir(dirname) {
-		return dirname && dirsMapping[dirname] || dirsMapping["default"];
+		return dirname && dirsMapping[dirname] || availableDirs;
 	}
 
 	static getFileExtension(file) {

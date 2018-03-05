@@ -104,7 +104,7 @@ class PersonsScreen extends Component {
     }
 
     renderFooter = () => {
-        return (<LoadingSpinner loading={this.state.loading} style={styles.footer}/>);
+        return (<LoadingSpinner loading={this.state.loading} color='#383838' style={styles.footer}/>);
     }
 
     _openPersonDetail = (person) => {

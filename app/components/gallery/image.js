@@ -1,31 +1,31 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ImageBackground, Text, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import LoadingSpinner from '../../helpers/loading-spinner';
 
 class GalleryImage extends Component {
 	constructor(props) {
 		super(props);
-		const { uri, name, isSelected } = this.props;
-		this.state = { uri, name, isSelected, multiMode: false, iconChecked: false };
+		const { uri, name, imgFormat, isSelected, isDownloading } = this.props;
+		this.state = { uri, name, imgFormat, isSelected, isDownloading, multiMode: false, iconChecked: false };
 	}
 
 	toggleImageSelection = () => {
 		this.setState({ isSelected: !this.state.isSelected });
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const { isSelected } = nextProps;
-		this.setState({ isSelected }, () => this.setState({ multiMode: isSelected }, () => {
+	componentWillReceiveProps({ isSelected, isDownloading }) {
+		this.setState({ isSelected, isDownloading }, () => this.setState({ multiMode: isSelected }, () => {
 			!this.state.multiMode && this.setState({ iconChecked: false });
 		}));
 	}
 
 	checkBoxSelection = () => {
-		const { uri, iconChecked } = this.state;
+		const { uri, name, imgFormat, iconChecked } = this.state;
 
 		this.setState({ iconChecked: !iconChecked }, () => {
 			if(!iconChecked) {
-				this.props.selectImage(uri);
+				this.props.selectImage({uri, name, imgFormat});
 			} else {
 				this.props.disselectImage(uri);
 			}
@@ -33,7 +33,7 @@ class GalleryImage extends Component {
 	}
 
 	checkMultiSelection = () => {
-		const { multiMode, uri, iconChecked, isSelected } = this.state;
+		const { multiMode, uri, name, imgFormat, iconChecked, isSelected } = this.state;
 
 		if(multiMode) {
 			return (<Icon
@@ -42,14 +42,14 @@ class GalleryImage extends Component {
 				color="#0099CC"
 				onPress={() => this.checkBoxSelection()}/>);
 		} else if(isSelected) {
-			return (<Button color='#81c04d' onPress={() => this.props.saveImage(uri)} title="Save" style={styles.saveButton}/>)
+			return (<Button color='#81c04d' onPress={() => this.props.saveImage({uri, name, imgFormat})} title="Save" style={styles.saveButton}/>)
 		}
 	}
 
 	render() {
 		const { style, selectGrid, disselectGrid } = this.props;
-		const { uri, name, isSelected, multiMode } = this.state;
-		const { container, selected, normal, text, imgStyle } = styles;
+		const { uri, name, isSelected, iconChecked, multiMode, isDownloading } = this.state;
+		const { container, selected, normal, text, imgStyle, spinner } = styles;
 
 		return (
 			<TouchableOpacity
@@ -58,8 +58,9 @@ class GalleryImage extends Component {
 				onPress={() => !multiMode && this.toggleImageSelection()}
 				onLongPress={() => this.props.toggleGridSelection(!isSelected, !isSelected ? selectGrid : disselectGrid)}>
 				<ImageBackground source={{ uri }} style={[imgStyle, isSelected ? selected : normal]} blurRadius={isSelected ? 2 : 0}>
-					{isSelected && <Text style={text}>{name}</Text>}
-					{this.checkMultiSelection()}
+					{isDownloading && (iconChecked || isSelected) && <LoadingSpinner loading={!isDownloading} size='small' color='#0099CC'/>}
+					{!isDownloading && isSelected && <Text style={text}>{name}</Text>}
+					{!isDownloading && this.checkMultiSelection()}
 				</ImageBackground>
 			</TouchableOpacity>
 		)
