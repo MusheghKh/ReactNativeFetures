@@ -2,10 +2,11 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import todoReducers from './reducers/todo';
+import galleryReducers from './reducers/gallery';
 
 const logger = createLogger();
 const createStoreWithMiddleware = applyMiddleware(logger, ReduxThunk)(createStore);
-const store = createStoreWithMiddleware(combineReducers({ ...todoReducers /*, TODO: Add for other Screens here too */ }));
+const store = createStoreWithMiddleware(combineReducers({ ...todoReducers, ...galleryReducers }));
 
 export default store;
 

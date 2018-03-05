@@ -13,6 +13,7 @@ import TodosScreen from './containers/TodosScreen';
 import WebViewScreen from './containers/WebViewScreen';
 import ImagePickerScreen from './containers/ImagePickerScreen';
 import TabsNavigatorScreen from './containers/TabsNavigatorScreen';
+import GalleryScreen from './containers/GalleryScreen';
 
 const DrawerNav = DrawerNavigator({
     Persons: { 
@@ -56,7 +57,15 @@ const DrawerNav = DrawerNavigator({
         screen: WebViewScreen,
         navigationOptions: {
             title: "WebView",
-            drawerLabel: "WebView",
+            drawerLabel: "WebView"
+        }
+    },
+
+    Gallery: {
+        screen: GalleryScreen,
+        navigationOptions: {
+            title: 'Gallery',
+            drawerLabel: 'Gallery'
         }
     },
 
@@ -64,7 +73,7 @@ const DrawerNav = DrawerNavigator({
         screen: ImagePickerScreen,
         navigationOptions: {
             title: "ImagePicker",
-            drawerLabel: "ImagePicker",
+            drawerLabel: "ImagePicker"
         }
     },
 
@@ -72,7 +81,7 @@ const DrawerNav = DrawerNavigator({
         screen: TabsNavigatorScreen,
         navigationOptions: {
             title: "Tabs",
-            drawerLabel: "Tabs",
+            drawerLabel: "Tabs"
         }
     }
 }, {

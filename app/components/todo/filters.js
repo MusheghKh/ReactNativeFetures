@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { VisibilityFilters } from '../../actions/todo/actionTypes';
-import { capitalize } from '../../helpers/custom-text-transformations';
+import { capitalize } from '../../helpers/custom-helper-functions';
 
 class Filters extends Component {
   render() {

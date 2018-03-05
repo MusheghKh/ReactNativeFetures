@@ -5,8 +5,7 @@ import {
     FlatList,
     ActivityIndicator,
     StyleSheet,
-    Alert,
-    Dimensions,
+    Alert
 } from 'react-native';
 import { List, ListItem, SearchBar, Tile } from "react-native-elements";
 import NoResults from '../helpers/no-results';
@@ -105,7 +104,7 @@ class PersonsScreen extends Component {
     }
 
     renderFooter = () => {
-        return (<LoadingSpinner loading={this.state.loading} style={styles.footer}/>);
+        return (<LoadingSpinner loading={this.state.loading} color='#383838' style={styles.footer}/>);
     }
 
     _openPersonDetail = (person) => {

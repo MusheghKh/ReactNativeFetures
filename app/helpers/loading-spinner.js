@@ -4,21 +4,25 @@ import { View, ActivityIndicator } from 'react-native';
 class LoadingSpinner extends Component {
 	constructor(props) {
 		super(props);
+		const { loading, color, size, style } = this.props;
 		this.state = {
-			loading: this.props.loading || false,
-			style: this.props.style || { paddingVertical: 20, borderColor: "#CED0CE" }
+			loading: loading || false,
+			color: color || '#81c04d',
+			size: size || 'large',
+			style: style || { paddingVertical: 20, borderColor: "#CED0CE" }
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		nextProps.loading !== undefined && this.setState({ loading: nextProps.loading });
+	componentWillReceiveProps({ loading }) {
+		loading !== undefined && this.setState({ loading });
 	}
 
 	render() {
-		if(this.state.loading) {	
+		const { loading, color, style, size } = this.state;
+		if(loading) {
 			return(
 	      <View style={this.state.style}>
-	        <ActivityIndicator animating size="large" />
+	        <ActivityIndicator animating size={size} color={color} />
 	      </View>
 			)
 		}

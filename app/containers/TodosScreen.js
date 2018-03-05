@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Modal } from 'react-native';
-import { TabNavigator } from 'react-navigation';
+import { StyleSheet, View } from 'react-native';
 import { bindActionCreators, dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as todoActions from '../actions/todo/todoActions';
@@ -11,10 +10,9 @@ import Filters from '../components/todo/filters';
 
 import store from '../store';
 
-@connect(state => ({
-  loading: state.loading,
-	todos: state.todos.filter(todo => {
-		switch(state.filter) {
+@connect(({ loading, todos, filter, searchFilter }) => ({
+	todos: todos.filter(todo => {
+		switch(filter) {
 			case VisibilityFilters.COMPLETED:
 				return todo.completed;
 			case VisibilityFilters.INCOMPLETE:
@@ -23,8 +21,9 @@ import store from '../store';
 			default:
 				return true;
 		}
-	}).filter(todo => todo.name.toLowerCase().includes(state.searchFilter)),
-	filter: state.filter
+	}).filter(todo => todo.name.toLowerCase().includes(searchFilter)),
+  loading,
+	filter
 }))
 
 class TodosScreen extends Component {
@@ -51,14 +50,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center'
-  },
-
-  list: {
-    flex: 1
-  },
-
-  add: {
-    flex: 1
   }
 });
 
